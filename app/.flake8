@@ -1,0 +1,6 @@
+[flake8] # 파이썬의 코드 스타일(PEP8) 강저 & 디버깅 도움
+exclude =  # 아래의 파일들은 볼 때 제외시켜줘
+    migrations,
+    __pycache__,
+    manage.py,
+    settings.py
