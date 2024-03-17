@@ -27,22 +27,35 @@ ARG DEV=false
 
 # 리눅스 -> venv 설치
 # && \ : 엔터치는 거랑 같다고 생각
+# 파이썬의 가상 환경을 /py 디렉토리에 생성한다. 
+# (가상환경 사용 시, 시스템의 파이썬 환경과 독립적으로 패키지 관리를 할 수 있음)
 RUN python -m venv /py && \
+    # 가상환경 내 pip(파이썬 패키지 관리자)를 최신 버전으로 업그레이드
     /py/bin/pip install --upgrade pip && \
     apk add --update --no-cache postgresql-client && \
     apk add --update --no-cache --virtual .tmp-build-deps \
         build-base postgresql-dev musl-dev && \
+    # 필수 파이썬 패키지들을 명시된 파일(requirements.txt)에 설치
     /py/bin/pip install -r /tmp/requirements.txt && \
+    # DEV 환경 변수가 true로 설정되어 있는지 확인 -> 개발용 의존성이 설치될지를 결정한다 (띄어쓰기 필수)
     if [ $DEV = "true" ]; \
+        # true일 경우, 개발용 의존성을 담고 있는 파일(requirements.dev.txt)에 명시된 추가 패키지들 설치
         then /py/bin/pip install -r /tmp/requirements.dev.txt ; \
+    # 조건문 끝
     fi && \
+    # /tmp 디렉토리를 삭제하여 빌드 중 생성된 임시 파일들 정리 -> 이미지의 크기를 줄이는 데 도움이 된다.
     rm -rf /tmp && \
     apk del .tmp-build-deps && \
+    # 새로운 사용자 추가 -> 보안상의 이유로 root 사용자가 아닌 일반 사용자 권한으로 실행하는 것이 좋다.
     adduser \
+        # 생성되는 사용자에게 패스워드를 설정하지 않는다. (우선 이 프로젝트에서 내가 하는데 당장은 번거로우니깐)
         --disabled-password \
+        # 사용자의 홈 디렉토리를 생성하지 않는다.
         --no-create-home \
+        # 생성할 사용자 이름
         django-user
 
+# 환경 변수 PATH를 설정하여, 가상 환경의 Python과 스크립트 디렉토리에서 실행 가능한 파일들을 쉽게 찾을 수 있도록 한다.
 ENV PATH="/py/bin:$PATH"
 
 USER django-user
