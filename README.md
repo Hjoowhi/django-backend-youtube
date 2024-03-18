@@ -40,3 +40,85 @@
 - 유튜브 데이터베이스 모델 구조 고민해오기
     - user : username(charified)
     - 구독은 어떻게 하지? 좋아요는? 싫어요는? 어디에 담지? 비디오는? 댓글은?
+
+Obstacles are what you see when you take your eyes off your vision
+
+컴퓨터 공학 -> 출발점이 인문학(생각)에 시작
+실리콘 밸리 생각 전쟁
+- Think Big
+- Think Week (MS)
+- Think Different (Apple)
+
+개발자 관련 책
+- 구루가 된 개발자들
+
+퀀트 자동 투자
+
+## Youtube API 개발
+### 1. 모델(테이블) 구조
+
+(1) User
+
+- email
+- password
+- nickname
+- is_business(boolean): personal, business
+
+(2) Video
+
+- title
+- link
+- description
+- category
+- views_count
+- thumbnail
+
+- User : ForiegnKey
+
+(3) Reaction
+
+- User : FK
+- Video : FK
+- reaction (like, dislike, cancel)
+
+<!-- (4) Notifications (알림 관련)
+- User : FK
+- Vidoe : FK
+
+```
+User:Notification => 
+User -> Noti, Noti, Noti (알림을 여러 개 받을 수 있다.)
+Noti -> User (여러 유저에게 보낼 수는 있지만, 여러 유저를 담아서 보낼 수는 없다. OOO님이 신청하신 어쩌구는 가능한데, OOO님, XXX님, AAA님들이 신청하신~ 이렇게 되지는 않음)
+```
+```
+Video:Noti
+``` -->
+
+(4) comment
+- User : FK
+- Video : FK
+- content
+- like
+- dislike
+
+(5) Subscription (채널 구독 관련)
+- User : FK => subscriber (내가 구독한 사람)
+- User : FK => subscribed_to (나를 구독한 사람)
+
+<!-- 올린 날짜/수정 날짜 -->
+(6) Common
+- cretaed_at
+- updated_at
+
+만들어야 하는 테이블(모델)
+- users, videos, reactions, comments, subscriptions, common
+- docker-compose run --rm app sh -c 'python manage.py startapp users'
+- docker-compose run --rm app sh -c 'python manage.py startapp videos'
+- docker-compose run --rm app sh -c 'python manage.py startapp reactions'
+- docker-compose run --rm app sh -c 'python manage.py startapp comments'
+- docker-compose run --rm app sh -c 'python manage.py startapp subscriptions'
+- docker-compose run --rm app sh -c 'python manage.py startapp common'
+
+### Custom User Model Create
+
+- TDO => 개발 및 디버깅 시간을 엄청나게 줄일 수 있다. PDB(Python Debugger)
