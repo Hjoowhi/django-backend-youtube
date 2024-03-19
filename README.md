@@ -57,14 +57,14 @@ Obstacles are what you see when you take your eyes off your vision
 ## Youtube API 개발
 ### 1. 모델(테이블) 구조
 
-(1) User
+(1) User => O
 
 - email
 - password
 - nickname
 - is_business(boolean): personal, business
 
-(2) Video
+(2) Video => -ing
 
 - title
 - link
@@ -122,3 +122,8 @@ Video:Noti
 ### Custom User Model Create
 
 - TDO => 개발 및 디버깅 시간을 엄청나게 줄일 수 있다. PDB(Python Debugger)
+
+# DRF 세팅
+- DjangoRestframeework
+- drf-spectacular => swagger-ui, redoc을 통해 소통 / requirement.txt 추가
+- docker-compose build

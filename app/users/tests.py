@@ -35,3 +35,5 @@ class UserTestCase(TestCase):
         # 슈퍼유저
         self.assertTrue(user.is_superuser)
         self.assertTrue(user.is_staff)
+
+# DRF 설치 & REST API
