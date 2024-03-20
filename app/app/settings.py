@@ -38,16 +38,16 @@ DJANGO_SYSTEM_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'core',
-    # 'common',
+    'common',
 ]
 
 CUSTOM_USER_APPS = [
     'users.apps.UsersConfig',
+    'videos.apps.VideosConfig',
+    'comments.apps.CommentsConfig',
     'rest_framework',
     'drf_spectacular',
-    # 'videos.apps.VidoesConfig',
     # 'reactions.apps.ReactionsConfig',
-    # 'comments.apps.CommentsConfig',
     # 'subscriptions.apps.SubscriptionsConfig',
 ]
 
