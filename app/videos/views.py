@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
 from .models import Video
-from .serializers import VideoSerializer
+from .serializers import VideoListSerializer, VideoDetailSerializer
 
 from rest_framework.response import Response
 from rest_framework import status
@@ -21,13 +21,13 @@ class VideoList(APIView):
         videos = Video.objects.all() # QuerySet[Video, Video, Video, ....]
 
         # 직렬화 (Object -> Json) - Serializer(내가 원하는 데이터만 내려주는)
-        serializer = VideoSerializer(videos, many=True) # 쿼리셋 안 데이터가 2개 이상일 때 many=True
+        serializer = VideoListSerializer(videos, many=True) # 쿼리셋 안 데이터가 2개 이상일 때 many=True
 
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request):
         user_data = request.data # Json -> Object(역직렬화)
-        serializer = VideoSerializer(data=user_data) # 데이터를 바로 넣으려면 data= 이 있어야 한다.
+        serializer = VideoListSerializer(data=user_data) # 데이터를 바로 넣으려면 data= 이 있어야 한다.
 
         if serializer.is_valid():
             serializer.save(user=request.user) # save 함수를 사용하면 대부분 어떤 유저가 하는지 명시해주는 게 좋다.
@@ -52,7 +52,7 @@ class VideoDetail(APIView): # APIView : GET, PUT, DELETE 구분
         except:
             raise NotFound
         
-        serializer = VideoSerializer(video) # Object -> Json
+        serializer = VideoDetailSerializer(video) # Object -> Json
 
         return Response(serializer.data)
 
@@ -60,7 +60,7 @@ class VideoDetail(APIView): # APIView : GET, PUT, DELETE 구분
         video_obj = Video.objects.get(pk=pk) # DB에서 불러온 데이터
         user_data = request.data # 유저가 보낸 데이터
         
-        serializer = VideoSerializer(video_obj, user_data) # video_obj를 user_data로 시리얼라이즈(변경)해 주세요.
+        serializer = VideoDetailSerializer(video_obj, user_data) # video_obj를 user_data로 시리얼라이즈(변경)해 주세요.
         
         serializer.is_valid(raise_exception=True) # is_valid() 함수를 실행해야 save() 함수가 실행된다.
         serializer.save() # 실제 저장 
