@@ -15,6 +15,20 @@ class SubscriptionTestCase(APITestCase):
         
         self.client.login(email='test1', password='pw123123')
 
+    # 내가 구독한 유튜버들(유튜버 리스트)
+    # [GET]
+    def test_sub_list_get(self):
+        # 구독 (1이 2를 구독함)
+        Subscription.objects.create(subscriber=self.user1, subscribed_to=self.user2)
+
+        url = reverse('sub-list')
+        res = self.client.get(url)
+
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(res.data), 1)
+        self.assertEqual(res.data[0]['subscribed_to'], self.user2.id)
+
+
     # 구독 버튼 테스트
     # [POST] api/v1/sub
     def test_sub_list_post(self):

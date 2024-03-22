@@ -46,12 +46,27 @@ CUSTOM_USER_APPS = [
     'videos.apps.VideosConfig',
     'comments.apps.CommentsConfig',
     'subscriptions.apps.SubscriptionsConfig',
+    'reactions.apps.ReactionsConfig',
     'rest_framework',
     'drf_spectacular',
-    # 'reactions.apps.ReactionsConfig',
+    'channels',
+    'chat.apps.ChatConfig' # chat은 기능이라는 의미로 s를 따로 붙이지 않았다.
 ]
 
 INSTALLED_APPS = DJANGO_SYSTEM_APPS + CUSTOM_USER_APPS
+
+# Channels를 사용하기 위한 설정
+ASGI_APPLICATION = 'app.routes.application' # Socket (비동기처리) - 채팅 때 사용 + HTTP (동기)
+# => FAST API (비동기) + (동기) : 기본적으로 비동기인데, 동기도 가능함
+
+WSGI_APPLICATION = 'app.wsgi.application' # HTTP Base - REST API (동기 처리)
+
+# 동기와 비동기
+# 스타벅스 입장했는데, 내 앞에 사람이 엄청난 옵션이 붙은 커스텀 음료를 시켰다.
+# 근데 직원이 1명이야 (동기) -> 엄청난 커스텀 음료를 만들고, 그 다음 내 음료를 만드는 차례니깐
+# 어라 직원이 2명이네 (비동기) -> 커스텀 음료 1명, 내 음료 1명 이렇게 만들 수 있음. 하지만 정확도가 떨어지는 이슈가 생길 수도 있다. -> 아아주세요 : 따뜻한 게 나왔는데요..?
+
+# Worker => FAST API
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -80,9 +95,6 @@ TEMPLATES = [
         },
     },
 ]
-
-WSGI_APPLICATION = 'app.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
