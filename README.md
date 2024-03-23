@@ -1,4 +1,4 @@
-<!-- # Project - Youtube
+# Project - Youtube
 
 ### 1. Youtube REST API
 
@@ -23,5 +23,4 @@
 
 ---
 
-## 1일차 - 프로젝트 세팅
- -->
+<!-- ## 1일차 - 프로젝트 세팅 -->

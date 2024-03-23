@@ -58,6 +58,7 @@ INSTALLED_APPS = DJANGO_SYSTEM_APPS + CUSTOM_USER_APPS
 # Channels를 사용하기 위한 설정
 ASGI_APPLICATION = 'app.routes.application' # Socket (비동기처리) - 채팅 때 사용 + HTTP (동기)
 # => FAST API (비동기) + (동기) : 기본적으로 비동기인데, 동기도 가능함
+# chat 기능은 비동기로 처리할 예정
 
 WSGI_APPLICATION = 'app.wsgi.application' # HTTP Base - REST API (동기 처리)
 
