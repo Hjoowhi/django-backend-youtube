@@ -50,15 +50,21 @@ CUSTOM_USER_APPS = [
     'rest_framework',
     'drf_spectacular',
     'channels',
-    'chat.apps.ChatConfig' # chat은 기능이라는 의미로 s를 따로 붙이지 않았다.
+    'chat.apps.ChatConfig', # chat은 기능이라는 의미로 s를 따로 붙이지 않았다.
 ]
 
 INSTALLED_APPS = DJANGO_SYSTEM_APPS + CUSTOM_USER_APPS
 
 # Channels를 사용하기 위한 설정
-ASGI_APPLICATION = 'app.routes.application' # Socket (비동기처리) - 채팅 때 사용 + HTTP (동기)
+ASGI_APPLICATION = 'app.route.application' # Socket (비동기처리) - 채팅 때 사용 + HTTP (동기)
 # => FAST API (비동기) + (동기) : 기본적으로 비동기인데, 동기도 가능함
 # chat 기능은 비동기로 처리할 예정
+
+# 웹소켓 채팅 구현했습니다. => 웹소켓의 원리가 뭔가요?
+# HTTP(단방향) 와 웹소켓(양방향)의 차이점은 뭐죠?
+# HTTP - http://
+# SOCKET - ws://, Hand Shake 향방향 통신이 가능해진다. Low Overhead(용량이 작아야 한다.), Frame(웹소켓에서 데이터를 나누는 단위)
+# STREAMING - 영상 파일은 어떻게 보낼건지? TCP/UDP, 3 ways hand shake
 
 WSGI_APPLICATION = 'app.wsgi.application' # HTTP Base - REST API (동기 처리)
 
@@ -158,4 +164,10 @@ AUTH_USER_MODEL = 'users.User'
 
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer'
+    }
 }
