@@ -12,5 +12,9 @@ drf_spectacular>=0.27.1,<0.28.0
 
 # Help Django Chatting Socket Connection
 channels>=4.0.0,<4.0.9
+daphne>=4.1.0,<4.2.0
+
+# uWSGI
+uwsgi>=2.0.24,<2.1.0
 
 # docker-compose build
