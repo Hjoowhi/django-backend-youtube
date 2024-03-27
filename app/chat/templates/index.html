@@ -24,7 +24,7 @@
     });
 
     function fetchChatRooms() {
-        fetch("http://127.0.0.1:8000/api/v1/chat/room/")
+        fetch("http://ec2-15-165-204-8.ap-northeast-2.compute.amazonaws.com/api/v1/chat/room/")
         .then((response) => response.json())
         .then((data) => {
             const roomContainer = document.getElementById("room-container");
@@ -76,7 +76,7 @@
     }
 
     function loadChatRoom(roomId) {
-        fetch(`http://127.0.0.1:8000/api/v1/chat/${roomId}/messages`)
+        fetch(`http://ec2-15-165-204-8.ap-northeast-2.compute.amazonaws.com/api/v1/chat/${roomId}/messages`)
         .then((response) => response.json())
         .then((messages) => {
             const chatLog = document.getElementById("chat-log");
